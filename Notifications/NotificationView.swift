@@ -9,8 +9,15 @@ import Foundation
 import SwiftUI
 
 struct NotificiationView: View{
+    var items = [60, 80 , 120]
+    @State private var isSelected = 60
     var body: some View{
         VStack{
+            Picker("",selection: $isSelected){
+                ForEach(items , id:\.self){item in
+                    Text("\(isSelected)")
+                }
+            }
             Button {
                 let content = UNMutableNotificationContent()
                 content.title = "Alllertt"
@@ -18,13 +25,13 @@ struct NotificiationView: View{
                 var date = DateComponents()
                 date.hour = 2
                 date.minute = 10
-                let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval:TimeInterval(isSelected), repeats: true)
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                 UNUserNotificationCenter.current().add(request)
             } label: {
                 Text("hello worlddd")
+            
             }
-
         }
     }
 }
