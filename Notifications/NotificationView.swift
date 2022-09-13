@@ -11,28 +11,28 @@ import SwiftUI
 struct NotificiationView: View{
     var items = [60, 80 , 120]
     @State private var isSelected = 60
+    let dayToAdd = 1
+    let currentDate = Date()
     var body: some View{
         VStack{
-            Picker("",selection: $isSelected){
-                ForEach(items , id:\.self){item in
-                    Text("\(isSelected)")
-                }
-            }
             Button {
                 let content = UNMutableNotificationContent()
                 content.title = "Alllertt"
                 content.subtitle = "calisiomm"
-                var date = DateComponents()
-                date.hour = 2
-                date.minute = 10
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval:TimeInterval(isSelected), repeats: true)
+                var dateCompanenet = DateComponents()
+                dateCompanenet.day = dayToAdd
+                let trigger =  UNCalendarNotificationTrigger(dateMatching: dateCompanenet, repeats: true)
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                 UNUserNotificationCenter.current().add(request)
+                let futureData = Calendar.current.date(byAdding: dateCompanenet, to:currentDate )
+                print(futureData!)
+
             } label: {
                 Text("hello worlddd")
             
             }
         }
+
     }
 }
 /*
